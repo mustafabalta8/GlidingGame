@@ -9,12 +9,19 @@ public class RocketmanCamera : MonoBehaviour
 
     [SerializeField] float smoothSpeed = 0.125f;
 
-    private void FixedUpdate()
+    Quaternion cam;
+    private void Start()
     {
+        cam = transform.rotation;
+    }
+
+    private void Update()
+    {
+       
         Vector3 desiredPos = Rocketman.position + Offset;
         Vector3 smootedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed);
-        transform.position = smootedPos;
+        transform.position = desiredPos;
 
-        //transform.LookAt(Rocketman);
+        transform.LookAt(Rocketman);
     }
 }
