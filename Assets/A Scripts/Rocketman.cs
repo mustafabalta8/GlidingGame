@@ -35,6 +35,8 @@ public class Rocketman : MonoBehaviour
         {
             MoveSpeedZ -= (0.004f* Time.deltaTime*5);
             transform.Translate(0, MoveSpeedY, MoveSpeedZ);
+
+            transform.Rotate(5, 0, 0);
         }
 
         

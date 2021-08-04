@@ -15,14 +15,13 @@ public class Stick : MonoBehaviour
 
     int FrameRate;
     int FrameRateWhereDrop;
-    // Start is called before the first frame update
+
     void Start()
     {
         animator = GetComponent<Animator>();
         rocketman = FindObjectOfType<Rocketman>();
     }
 
-    // Update is called once per frame
     public void Update()
     {
         mousePosInUnits = Input.mousePosition.x / Screen.width * 18;
@@ -40,22 +39,18 @@ public class Stick : MonoBehaviour
         {
             animator.SetTrigger("ReleaseStick");
             FrameRateWhereDrop = FrameRate;
-
-
         }
 
-
+        /*  
         if (FrameRate == MousePosAtBendAnimStart - (int)mousePosInUnits)
         {
             animator.speed = 0;
-            //Debug.Log("animator speed 000");
         }
         if (FrameRate != MousePosAtBendAnimStart - (int)mousePosInUnits)
         {
             isPause = false;
             animator.speed = 1;
-            //Debug.Log("animator speed 111");
-        }
+        }*/
             
 
     }
@@ -63,12 +58,12 @@ public class Stick : MonoBehaviour
     {
         Debug.Log("frame:" + FrameRateWhereDrop);
         rocketman.SetHasLaunch(FrameRateWhereDrop);
-
     }
 
     public void GetBendStateFrame(int frameRate)
     {
-        StartCoroutine(CheckFrameRate(frameRate));
+        FrameRate = frameRate;
+        //StartCoroutine(CheckFrameRate(frameRate));
         /*
         isPause = true;
         Debug.Log("frame rate " + frameRate);
