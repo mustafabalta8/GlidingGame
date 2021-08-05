@@ -19,5 +19,7 @@ public class Jumper : MonoBehaviour
             otherCollider.transform.position +=  new Vector3(0, 15, 0);
             Debug.Log("zýplama çalýþtý");
         }*/
+        
     }
+    
 }

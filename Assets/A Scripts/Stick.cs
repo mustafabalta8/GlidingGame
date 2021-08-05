@@ -58,6 +58,7 @@ public class Stick : MonoBehaviour
     {
         Debug.Log("frame:" + FrameRateWhereDrop);
         rocketman.SetHasLaunch(FrameRateWhereDrop);
+       // rocketman.rg.velocity = new Vector3(0, 30, 0);
     }
 
     public void GetBendStateFrame(int frameRate)

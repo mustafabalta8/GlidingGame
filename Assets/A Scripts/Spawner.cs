@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] GameObject prefabToInstantiate;
+    [SerializeField] GameObject[] Prefabs;
     [SerializeField] GameObject prefabHolder;
-    public float maxDistance = 1f;
+
     public float spawnInterval = 0.1f;
     int ZpositionOfPrefab = 10;
     Quaternion baseRotation;
@@ -16,6 +16,7 @@ public class Spawner : MonoBehaviour
     int i = 0;
     private void Start()
     {
+        zPositionAmountOfRise = 15;
         baseRotation = transform.rotation;
 
         StartCoroutine(SpawnObjects());
@@ -31,8 +32,6 @@ public class Spawner : MonoBehaviour
         set
         {
             zPositionAmountOfRise = value;
-
-            Debug.Log("zPositionAmountOfRise:" + zPositionAmountOfRise);
         }
     }
     IEnumerator SpawnObjects()
@@ -46,15 +45,18 @@ public class Spawner : MonoBehaviour
             Vector3 spawnPosition = currentPosition + randomOffset;
             Instantiate(prefabToInstantiate, spawnPosition, baseRotation);
             */
-            ZpositionOfPrefab = ZpositionOfPrefab + zPositionAmountOfRise; ;// To prevent spawning at same place and to spawn futher places
+            ZpositionOfPrefab = ZpositionOfPrefab + 15; ;// To prevent spawning at same place and to spawn futher places
            // Debug.Log("IncreaseZ" + ZpositionOfPrefab)
             Vector3 playerPos = new Vector3(0, 0, transform.position.z/1.3f);
+            
+            for (i = 1;i < 15; i++){
 
-            for (i = 1;i < 20; i++){
-                Vector3 SpawnWith = new Vector3( (i*13)+Random.Range(1,10)-120, 0, ZpositionOfPrefab);
+                spawnPos.y = Random.Range(-4, 4);
+                GameObject prefabToInstantiate= Prefabs[Random.Range(0,2)];
+                Vector3 SpawnWith = new Vector3( (i*18)+Random.Range(3,15)-150, 0, ZpositionOfPrefab);
                 GameObject NewObj = Instantiate(prefabToInstantiate, spawnPos + SpawnWith + playerPos, baseRotation, prefabHolder.transform);
 
-                Destroy(NewObj, 20);
+                //Destroy(NewObj, 20);
             }
             
            
