@@ -13,8 +13,9 @@ public class Rocketman : MonoBehaviour
     bool HasLaunch;
 
     Quaternion BaseRotation;
-    //Rigidbody rg;
+    Rigidbody rg;
     Animator animator;
+    Spawner spawner;
 
     [SerializeField] float mousePosInUnits;
     float MousePosAtStart;
@@ -27,30 +28,28 @@ public class Rocketman : MonoBehaviour
         StickToRocatmanVector = transform.position - StickTopPos.transform.position;
 
         animator = GetComponent<Animator>();
-        //rg = GetComponent<Rigidbody>();
+        spawner = GetComponent<Spawner>();
+        rg = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
         if (HasLaunch==false)
         {
             LockToTheStick();
         }
         else
         {
-            MoveSpeedZ -= (0.004f* Time.deltaTime*5);
+            //MoveSpeedZ -= (0.004f* Time.deltaTime*5);
+            MoveSpeedY -= (0.004f * Time.deltaTime * 5);
             transform.Translate(MoveSpeedX, MoveSpeedY, MoveSpeedZ, Space.World);
             //rg.AddForce(MoveSpeedX, MoveSpeedY, MoveSpeedZ);
             mousePosInUnits = Input.mousePosition.x / Screen.width * 18;
-            ManageWingStates();
+            //spawner.ZPositionAmountOfRise = 1; 
+            ManageWingStates();  
 
-            
-            
         }
-
         
     }
 
@@ -66,11 +65,11 @@ public class Rocketman : MonoBehaviour
             transform.rotation = BaseRotation;
             if(MousePosAtStart < mousePosInUnits)
             {
-                MoveSpeedX = 0.05f;
+                MoveSpeedX = 0.5f;
             }
             else
             {
-                MoveSpeedX = -0.05f;
+                MoveSpeedX = -0.5f;
             }
         }
         else if (Input.GetMouseButtonUp(0))
@@ -83,7 +82,7 @@ public class Rocketman : MonoBehaviour
         }
         else
         {
-            transform.Rotate(5, 0, 0);
+            transform.Rotate(15, 0, 0);
             MoveSpeedX = 0;
         }
         
@@ -100,7 +99,7 @@ public class Rocketman : MonoBehaviour
     {
         transform.rotation = BaseRotation;
         HasLaunch = true;
-        MoveSpeedZ = moveSpeed/4;
+        MoveSpeedZ = moveSpeed/3;
 
         rocketmanCamera.SetActive(true);
     }
@@ -110,9 +109,18 @@ public class Rocketman : MonoBehaviour
         {
             MoveSpeedZ = 0;
             MoveSpeedY = 0;
+            Debug.Log("Game Over");
+            Time.timeScale = 0;
+        }
+        if (otherCollider.gameObject.tag == "Jumper")
+        {
+
+            //MoveSpeedY += 0.5f;
+            rg.velocity = new Vector3(0, 15, 0);
+            Debug.Log("zýplama çalýþtý");
         }
     }
-    public void OpenWingState()
+    public void OpenWingState()//Open wind animation event
     {
         animator.speed = 0;
     }
