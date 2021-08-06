@@ -14,7 +14,7 @@ public class Stick : MonoBehaviour
     Rocketman rocketman;
 
     int FrameRate;
-    int FrameRateWhereDrop;
+    int FrameRateWhereRelease;
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class Stick : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             animator.SetTrigger("ReleaseStick");
-            FrameRateWhereDrop = FrameRate;
+            FrameRateWhereRelease = FrameRate;
         }
 
         /*  
@@ -56,8 +56,8 @@ public class Stick : MonoBehaviour
     }
     public void LaunchRocketman()
     {
-        Debug.Log("frame:" + FrameRateWhereDrop);
-        rocketman.SetHasLaunch(FrameRateWhereDrop);
+        Debug.Log("FrameRateWhereDrop:" + FrameRateWhereRelease);
+        rocketman.SetHasLaunch(FrameRateWhereRelease);
        // rocketman.rg.velocity = new Vector3(0, 30, 0);
     }
 
@@ -65,27 +65,7 @@ public class Stick : MonoBehaviour
     {
         FrameRate = frameRate;
         //StartCoroutine(CheckFrameRate(frameRate));
-        /*
-        isPause = true;
-        Debug.Log("frame rate " + frameRate);
-        while (isPause==true)
-        {
-            Debug.Log("MousePosAtBendAnimStart: " + MousePosAtBendAnimStart);
-            Debug.Log("mousePosInUnits: " + mousePosInUnits);
-            Debug.Log("MousePosAtBendAnimStart - (int)mousePosInUnits: " + (MousePosAtBendAnimStart - (int)mousePosInUnits));
-            if (frameRate == MousePosAtBendAnimStart - (int)mousePosInUnits)
-            {
-                animator.speed = 0;
-                Debug.Log("animator speed 000");
-            }
-            else
-            {
-                Debug.Log("animator speed 111");
-                animator.speed = 1;
-                isPause = false;
-                Debug.Log("isPause false");
-            }
-        }*/
+        
 
     }
     IEnumerator CheckFrameRate(int frameRate)
