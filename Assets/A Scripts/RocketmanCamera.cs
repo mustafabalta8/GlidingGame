@@ -20,7 +20,7 @@ public class RocketmanCamera : MonoBehaviour
        
         Vector3 desiredPos = Rocketman.position + Offset;
         Vector3 smootedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed);
-        transform.position = desiredPos;
+        transform.position = smootedPos;
 
         transform.LookAt(Rocketman);
     }

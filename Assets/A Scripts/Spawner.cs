@@ -39,12 +39,7 @@ public class Spawner : MonoBehaviour
         
         while (true)
         {
-            /*
-            Vector3 currentPosition = transform.position;
-            Vector3 randomOffset = Random.insideUnitSphere * maxDistance;
-            Vector3 spawnPosition = currentPosition + randomOffset;
-            Instantiate(prefabToInstantiate, spawnPosition, baseRotation);
-            */
+            
             ZpositionOfPrefab = ZpositionOfPrefab + 15; ;// To prevent spawning at same place and to spawn futher places
            // Debug.Log("IncreaseZ" + ZpositionOfPrefab)
             Vector3 playerPos = new Vector3(0, 0, transform.position.z/1.3f);

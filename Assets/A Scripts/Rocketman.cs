@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Rocketman : MonoBehaviour
 {
@@ -10,12 +11,13 @@ public class Rocketman : MonoBehaviour
     Vector3 StickToRocketmanVector;
 
     [SerializeField] float MoveSpeedZ, MoveSpeedY,MoveSpeedX;
-    bool HasLaunch, gameOver;
+    public bool HasLaunch, gameOver;
 
     Quaternion BaseRotation;
     Rigidbody rg;
     Animator animator;
     Spawner spawner;
+    Score score;
 
     [SerializeField] float mousePosInUnits;
     float MousePosAtStart;
@@ -24,6 +26,7 @@ public class Rocketman : MonoBehaviour
 
 
     [SerializeField] GameObject GameOverPanel;
+    [SerializeField] Text FinalScore;
     void Start()
     {
         MoveSpeedX = 0;
@@ -35,6 +38,7 @@ public class Rocketman : MonoBehaviour
         animator = GetComponent<Animator>();
         spawner = GetComponent<Spawner>();
         rg = GetComponent<Rigidbody>();
+        score = FindObjectOfType<Score>();
     }
 
     // Update is called once per frame
@@ -56,6 +60,7 @@ public class Rocketman : MonoBehaviour
             //rg.velocity = new Vector3(MoveSpeedX * 100, MoveSpeedY * 150, MoveSpeedZ * 50);
 
             mousePosInUnits = Input.mousePosition.x / Screen.width * 18;
+            
 
             //spawner.ZPositionAmountOfRise = 1; 
 
@@ -114,9 +119,7 @@ public class Rocketman : MonoBehaviour
         {
             transform.Translate(-0.6f, 0, 0);
             transform.Rotate(0, -20, 0);
-        }
-        
-       
+        }              
     }
     void LockToTheStick()
     {
@@ -140,7 +143,7 @@ public class Rocketman : MonoBehaviour
         {
             gameOver = true;
             GameOverPanel.SetActive(true);
-
+            FinalScore.text = "YOUR SCORE IS "+score.GetScore();
 
         }
         if (otherCollider.gameObject.tag == "Jumper")
