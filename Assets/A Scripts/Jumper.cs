@@ -5,12 +5,6 @@ using UnityEngine;
 public class Jumper : MonoBehaviour
 {
     [SerializeField] float upwardMove, forwardMove;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision otherCollider)
     {
               

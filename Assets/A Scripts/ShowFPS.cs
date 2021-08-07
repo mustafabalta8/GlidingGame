@@ -16,7 +16,7 @@ public class ShowFPS : MonoBehaviour
         if (Time.unscaledTime > timer)
         {
             int fps = (int)(1f / Time.unscaledDeltaTime);
-            fpsText.text = fps + " FPS" + SceneManager.GetActiveScene().path;
+            fpsText.text = fps + " FPS on "  ;//+SceneManager.GetActiveScene().path
             timer = Time.unscaledTime + hudRefreshRate;
         }
     }

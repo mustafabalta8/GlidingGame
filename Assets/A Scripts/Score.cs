@@ -10,13 +10,11 @@ public class Score : MonoBehaviour
     [SerializeField] Text ScoreText;
 
     int score;
-
-
     void Update()
     {
         if (rocketman.HasLaunch == true && rocketman.gameOver == false)
         {
-            score += (int)(rocketman.transform.position.z * Time.deltaTime * 10);
+            score += (int)(rocketman.transform.position.z * Time.deltaTime);
             ScoreText.text = score.ToString();
         }
         

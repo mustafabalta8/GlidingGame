@@ -16,11 +16,10 @@ public class Rocketman : MonoBehaviour
     Quaternion BaseRotation;
     Rigidbody rg;
     Animator animator;
-    Spawner spawner;
     Score score;
 
     [SerializeField] float mousePosInUnits;
-    float MousePosAtStart;
+    //float MousePosAtStart;
     float rotateForwardSpeed=15;
     [SerializeField] float MultiplierOfFallSpeed;
 
@@ -36,8 +35,9 @@ public class Rocketman : MonoBehaviour
         StickToRocketmanVector = transform.position - StickTopPos.transform.position;
 
         animator = GetComponent<Animator>();
-        spawner = GetComponent<Spawner>();
-        rg = GetComponent<Rigidbody>();
+        // rg = GetComponent<Rigidbody>();
+        //rg.AddForce(MoveSpeedX*100, MoveSpeedY*100, MoveSpeedZ*20);
+        //rg.velocity = new Vector3(MoveSpeedX * 100, MoveSpeedY * 150, MoveSpeedZ * 50);
         score = FindObjectOfType<Score>();
     }
 
@@ -50,70 +50,46 @@ public class Rocketman : MonoBehaviour
         }
         if (HasLaunch == true && gameOver == false)
         {
-            MoveSpeedY -= (0.007f * Time.deltaTime * MultiplierOfFallSpeed);
+            MoveSpeedY -= (MultiplierOfFallSpeed * Time.deltaTime);
             MoveSpeedZ -= (0.01f * Time.deltaTime * 3);
 
             Vector3 MoveVek = new Vector3(MoveSpeedX, MoveSpeedY, MoveSpeedZ);
-            transform.Translate(MoveVek, Space.World);
-
-            //rg.AddForce(MoveSpeedX*100, MoveSpeedY*100, MoveSpeedZ*20);
-            //rg.velocity = new Vector3(MoveSpeedX * 100, MoveSpeedY * 150, MoveSpeedZ * 50);
+            transform.Translate(MoveVek, Space.World);        
 
             mousePosInUnits = Input.mousePosition.x / Screen.width * 18;
-            
-
-            //spawner.ZPositionAmountOfRise = 1; 
-
-            ManageWingStates();
-            
+            ManageWingStates();           
         }
     }
     void ManageWingStates()
-    {
-        //rotateForwardSpeed=15;       
-        if (Input.GetMouseButtonDown(0))
-        {
-            MousePosAtStart = (int)mousePosInUnits;
-            //Debug.Log("MousePosAtStart:"+ MousePosAtStart);
-        }
+    {        
         if (Input.GetMouseButton(0))
         {
             animator.SetBool("Open", true);
             transform.rotation = BaseRotation;
-            MultiplierOfFallSpeed = 0.5f;
-            MoveSpeedZ = 1f;
+            MultiplierOfFallSpeed = 0.000003f;
+            //MoveSpeedY = -0.05f;
 
             HorizontalMove();
-            //rotateForwardSpeed = 0;
         }
-       if (Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0))
         {
-            MultiplierOfFallSpeed = 20;
-            MoveSpeedZ = 1.3f;
-            Debug.Log("GetMouseButtonUp worked");
+            MultiplierOfFallSpeed = 0.15f;
+           // Debug.Log("GetMouseButtonUp worked");
             animator.speed = 1;// To make transition to close-wings animation
             animator.SetBool("Open", false);
-            //rotateForwardSpeed = 0;
-            //  MoveSpeedX = 0;
-
             transform.rotation = BaseRotation;
 
-        }
-        
+        }      
         rotateForwardSpeed = 15;
         transform.Rotate(rotateForwardSpeed, 0, 0);
-
-
-
     }
     private void HorizontalMove()
     {
-        //Debug.Log("open wings state");
         if (mousePosInUnits > 9)//MousePosAtStart
         {  
             transform.Translate(0.6f, 0, 0);            
             transform.Rotate(0, 20, 0);
-            //Debug.Log("mousePosInUnits > 9)");
         }
         else
         {
@@ -133,8 +109,7 @@ public class Rocketman : MonoBehaviour
     {
         transform.rotation = BaseRotation;
         HasLaunch = true;
-        //rg.AddForce()
-        MoveSpeedZ = moveSpeed/5;
+        MoveSpeedZ = moveSpeed/4;
         rocketmanCamera.SetActive(true);
     }
     private void OnCollisionEnter(Collision otherCollider)
@@ -143,25 +118,20 @@ public class Rocketman : MonoBehaviour
         {
             gameOver = true;
             GameOverPanel.SetActive(true);
-            FinalScore.text = "YOUR SCORE IS "+score.GetScore();
+            FinalScore.text = ""+score.GetScore();
 
         }
         if (otherCollider.gameObject.tag == "Jumper")
         {
             animator.speed = 1;
             animator.SetBool("Open", false);
-            MultiplierOfFallSpeed = 9;
+            MultiplierOfFallSpeed = 0.12f;
 
             //MoveSpeedY = 0.35f;
             //MoveSpeedZ = 1.3f;
             Debug.Log("zýplama çalýþtý");
         }
     }
-    public void WingState(int state)//Open wind animation event
-    {
-        animator.speed = state;
-    }
-
     public void SetMoveVektor(float upward, float forward)
     {
         MoveSpeedY = upward;

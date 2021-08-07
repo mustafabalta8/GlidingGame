@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931600b57e697814eaef9af37a4abd37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upwardMove: 0.4
+  upwardMove: 0.12
   forwardMove: 1.3
 --- !u!1 &5825027465825808352
 GameObject:
@@ -185,5 +185,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 931600b57e697814eaef9af37a4abd37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upwardMove: 0.4
+  upwardMove: 0.36
   forwardMove: 1.3
